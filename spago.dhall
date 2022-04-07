@@ -18,7 +18,7 @@ to generate this file without the comments in this block.
   , "perspectives-utilities"
   , "foreign"
   , "simple-json"
-  , "foreign-class"
+  , "foreign-generic"
   , "arrays"
   , "either"
   , "foldable-traversable"

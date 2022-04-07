@@ -120,11 +120,3 @@ with perspectives-utilities =
   , version =
       "v1.0.0"
   }
-  with foreign-class =
-    { dependencies =
-        ["prelude"]
-    , repo =
-        "https://github.com/paf31/purescript-foreign-generic.git"
-    , version =
-        "v11.0.0"
-    }
