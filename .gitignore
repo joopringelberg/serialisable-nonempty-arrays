@@ -8,3 +8,4 @@ node_modules
 output
 .spago
 .purs-repl
+.psc-ide-port
