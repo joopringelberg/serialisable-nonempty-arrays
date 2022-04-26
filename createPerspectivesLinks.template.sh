@@ -8,9 +8,9 @@
 cd .spago
 
 
-##### PERSPECTIVES-v1.0.0
+##### PERSPECTIVES-UTILITIES
 cd perspectives-utilities
 
-rm -Rf v v1.0.0
-ln -s ../../../perspectives-utilities v1.0.0
+rm -Rf v UTILITIES
+ln -s ../../../perspectives-utilities UTILITIES
 
