@@ -1,6 +1,6 @@
 {
   "name": "serialisable-nonempty-arrays",
-  "version": "1.0.1",
+  "version": "1.1.0",
   "description": "A wrapper for Data.Array.NonEmpty with a Decode and Encode instance. Also with a ReadForeign and WriteForeign instance.",
   "license": "GPL-3.0-or-later",
   "author": "Joop Ringelberg <joop.ringelberg@gmail.com>",

@@ -18,5 +18,5 @@ with perspectives-utilities =
   , repo =
       "https://github.com/joopringelberg/perspectives-utilities.git"
   , version =
-      "v1.0.0"
+      "v1.1.0"
   }

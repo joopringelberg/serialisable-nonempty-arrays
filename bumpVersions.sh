@@ -5,7 +5,7 @@
 # * createPerspectivesLinks.sh
 # * package.json
 
-UTILITIES=v1.0.0
+UTILITIES=v1.1.0
 
 sed "s/UTILITIES/${UTILITIES}/g;" packages.template.dhall > packages.dhall
 
