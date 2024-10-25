@@ -17,8 +17,8 @@ package:
 workspace:
   extra_packages:
     perspectives-utilities:
-      # path: ../perspectives-utilities
-      git: https://github.com/joopringelberg/perspectives-utilities.git
-      ref: v2.0.0
+      path: ../perspectives-utilities
+      # git: https://github.com/joopringelberg/perspectives-utilities.git
+      # ref: v2.0.0
   package_set:
     registry: 60.6.0
