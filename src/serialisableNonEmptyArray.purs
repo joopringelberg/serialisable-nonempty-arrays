@@ -23,19 +23,16 @@
 module Perspectives.SerializableNonEmptyArray where
 
 import Control.Monad.Error.Class (throwError)
-import Control.Monad.Except (runExcept)
 import Data.Array.NonEmpty (NonEmptyArray, toArray, fromArray, singleton) as NER
-import Data.Either (Either(..))
 import Data.FunctorWithIndex (class FunctorWithIndex)
 import Data.List.NonEmpty as NEL
 import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype, unwrap)
 import Foreign (ForeignError(..))
-import Foreign.Class (class Decode, class Encode, decode, encode)
 import Perspectives.Utilities (class PrettyPrint, prettyPrint')
 import Prelude (class Eq, class Functor, class Ord, class Semigroup, class Show, pure, show, ($), (<<<), (<>), bind)
 import Simple.JSON (class ReadForeign, class WriteForeign, write, read')
-
+ 
 newtype SerializableNonEmptyArray a = SerializableNonEmptyArray (NER.NonEmptyArray a)
 
 instance showSerializableNonEmptyArray :: Show a => Show (SerializableNonEmptyArray a) where
@@ -51,16 +48,6 @@ derive newtype instance functorSerializableNonEmptyArray :: Functor Serializable
 derive newtype instance functorWithIndexSerializableNonEmptyArray :: FunctorWithIndex Int SerializableNonEmptyArray
 
 derive instance newtypeSerializableNonEmptyArray :: Newtype (SerializableNonEmptyArray a) _
-
-instance encodeSerializableNonEmptyArray :: Encode a => Encode (SerializableNonEmptyArray a) where
-  encode (SerializableNonEmptyArray arr) = encode (NER.toArray arr)
-
-instance decodeSerializableNonEmptyArray :: Decode a => Decode (SerializableNonEmptyArray a) where
-  decode f = case (runExcept (decode f)) of
-    Left e -> throwError e
-    Right (arr :: Array a) -> case NER.fromArray arr of
-      Nothing -> throwError (NEL.singleton (ForeignError "SerializableNonEmptyArray cannot be empty"))
-      Just narr -> pure (SerializableNonEmptyArray narr)
 
 instance readForeignSerializableNonEmptyArray :: ReadForeign a => ReadForeign (SerializableNonEmptyArray a) where
   readImpl f = do
