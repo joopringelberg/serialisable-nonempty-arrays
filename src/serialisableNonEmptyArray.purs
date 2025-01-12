@@ -23,14 +23,17 @@
 module Perspectives.SerializableNonEmptyArray where
 
 import Control.Monad.Error.Class (throwError)
+import Data.Array (foldMap, foldl, foldr)
 import Data.Array.NonEmpty (NonEmptyArray, toArray, fromArray, singleton) as NER
+import Data.Foldable (class Foldable)
 import Data.FunctorWithIndex (class FunctorWithIndex)
 import Data.List.NonEmpty as NEL
 import Data.Maybe (Maybe(..))
 import Data.Newtype (class Newtype, unwrap)
+import Data.Traversable (class Traversable, sequence, traverse)
 import Foreign (ForeignError(..))
 import Perspectives.Utilities (class PrettyPrint, prettyPrint')
-import Prelude (class Eq, class Functor, class Ord, class Semigroup, class Show, pure, show, ($), (<<<), (<>), bind)
+import Prelude (class Eq, class Functor, class Ord, class Semigroup, class Show, pure, show, ($), (<<<), (<>), bind, (<$>))
 import Simple.JSON (class ReadForeign, class WriteForeign, write, read')
  
 newtype SerializableNonEmptyArray a = SerializableNonEmptyArray (NER.NonEmptyArray a)
@@ -61,6 +64,15 @@ instance writeForeignSerializableNonEmptyArray :: WriteForeign a => WriteForeign
 
 instance prettyPrintSerializableNonEmptyArray :: (Show a, PrettyPrint a) => PrettyPrint (SerializableNonEmptyArray a) where
   prettyPrint' tab arr = prettyPrint' tab (toArray arr)
+
+instance Foldable SerializableNonEmptyArray where
+  foldl f z (SerializableNonEmptyArray arr) = foldl f z (NER.toArray arr)
+  foldr f z (SerializableNonEmptyArray arr) = foldr f z (NER.toArray arr)
+  foldMap f (SerializableNonEmptyArray arr) = foldMap f (NER.toArray arr)
+
+instance Traversable SerializableNonEmptyArray where
+  traverse f (SerializableNonEmptyArray arr) = SerializableNonEmptyArray <$> traverse f arr
+  sequence (SerializableNonEmptyArray arr) = SerializableNonEmptyArray <$> sequence arr
 
 fromArray :: forall a. Array a -> Maybe (SerializableNonEmptyArray a)
 fromArray arr = case NER.fromArray arr of
